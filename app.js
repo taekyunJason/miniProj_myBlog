@@ -1,6 +1,9 @@
 const express = require("express");
+const connect = require("./schemas"); //index라는 파일이름은 특이해서 호출할때 생략가능
 const app = express();
 const port = 3000;
+
+connect();
 
 const goodsRouter = require("./routes/goods");
 
@@ -12,6 +15,7 @@ const requestMiddleware = (req, res, next) => {
   next();
 };
 
+app.use(express.json()); //json함수를 실행하면 body에 들어오는 json형태의 데이터를 코드에서 사용할 수 있게 파싱해주는 미들웨어 -> 이것이 없으면 req.body에는 undefined가 들어옴
 app.use(requestMiddleware);
 
 //  /api 경로로 들어왔을때만 goodsRouter를 실행시키겠다는 코드
