@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Webpage Title -->
+    <title>세상을 바꾸는 생각 | 씽크탱크</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
+    />
+
+    <!-- Bulma CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css"
+    />
+    <!-- Font Awesome CSS -->
+    <link
+      href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="{{ url_for('static', filename='mystyle.css') }}"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      * {
+        font-family: "Gowun Dodum", sans-serif;
+      }
+      .navbar-brand {
+        width: 100%;
+        height: 200px;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+      .navbar-brand > button {
+        margin-top: 30px;
+        width: 200px;
+        height: 50px;
+
+        background-color: transparent;
+        color: white;
+
+        border-radius: 50px;
+        border: 1px solid white;
+
+        margin-top: 10px;
+      }
+      .navbar-brand > button:hover {
+        border: 3px solid white;
+      }
+      .footer {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 70px;
+        background: #ccc;
+      }
+    </style>
+    <script>
+      $(document).ready(function () {
+        listing();
+        show_weather();
+      });
+
+      function listing() {
+        $("#movie").empty();
+        $.ajax({
+          type: "GET",
+          url: "/movieData",
+          data: {},
+          success: function (response) {
+            let rows = response["movies"];
+            console.log(rows);
+            for (let i = 0; i < rows.length; i++) {
+              let default_url =
+                "https://movie.naver.com/movie/bi/mi/running.naver?code=";
+              let movieName = rows[i]["movieNm"];
+              let movieImage = rows[i]["movieImg"];
+              let movieScore = rows[i]["movieScr"];
+              let movieJenre = rows[i]["movieJnr"];
+              let movieUrl = rows[i]["movielink"].split("=")[1];
+              let totalMovieUrl = default_url + movieUrl;
+
+              let temp_html = `<li><a href="${totalMovieUrl}" target="_blank"><button type="button" class="btn btn-outline-danger"><img src="${movieImage}" style="width:170px; height:250px;"
+                                             class="images" ></button></a></li>`;
+              $("#movie").append(temp_html);
+            }
+          },
+        });
+      }
+    </script>
+  </head>
+  <body>
+    <nav
+      style="color: black; background-color: black"
+      class="navbar is-fixed-top is-white"
+      role="navigation"
+      aria-label="main navigation"
+    >
+      <div class="navbar-brand" style="justify-content: center">
+        <a class="navbar-item" href="/">
+          <p style="color: white; background-color: black" class="title">
+            세상을 바꾸는 생각, 씽크탱크❗💬
+          </p>
+        </a>
+        <button onclick="open_box()">영화 기록하기</button>
+      </div>
+    </nav>
+
+    <footer
+      style="color: white; background-color: #110808"
+      class="footer mt-3 is-fixed-bottom"
+    >
+      <div class="content has-text-centered">
+        <p>
+          <strong style="color: #d7a524">⛵hanghae99</strong> by
+          <strong class="has-text-link-dark">Jason_Kim </strong>|
+          <strong class="has-text-link-dark">Project : </strong> 세상을 바꾸는
+          생각, 씽크탱크 | <strong class="has-text-link-dark">Dev.</strong>
+          김태균
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>
