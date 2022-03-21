@@ -84,36 +84,25 @@
     </style>
     <script>
       $(document).ready(function () {
-        listing();
-        show_weather();
+        callDetail();
       });
 
-      function listing() {
-        $("#movie").empty();
-        $.ajax({
+      function callDetail() {
+        let postId = $.ajax({
           type: "GET",
-          url: "/movieData",
+          url: "/api/list/detailData?postId=${postId}",
+          dataType: "json",
           data: {},
-          success: function (response) {
-            let rows = response["movies"];
-            console.log(rows);
-            for (let i = 0; i < rows.length; i++) {
-              let default_url =
-                "https://movie.naver.com/movie/bi/mi/running.naver?code=";
-              let movieName = rows[i]["movieNm"];
-              let movieImage = rows[i]["movieImg"];
-              let movieScore = rows[i]["movieScr"];
-              let movieJenre = rows[i]["movieJnr"];
-              let movieUrl = rows[i]["movielink"].split("=")[1];
-              let totalMovieUrl = default_url + movieUrl;
 
-              let temp_html = `<li><a href="${totalMovieUrl}" target="_blank"><button type="button" class="btn btn-outline-danger"><img src="${movieImage}" style="width:170px; height:250px;"
-                                             class="images" ></button></a></li>`;
-              $("#movie").append(temp_html);
-            }
+          success: function (response) {
+            let rows = response;
+            console.log(rows);
+            for (let i = 0; i < rows.length; i++) {}
           },
         });
       }
+
+      function callPostID() {}
     </script>
   </head>
   <body>
@@ -129,7 +118,7 @@
             세상을 바꾸는 생각, 씽크탱크❗💬
           </p>
         </a>
-        <button onclick="open_box()">영화 기록하기</button>
+        <a href="writePost.html">포스트 하러가기</a>
       </div>
     </nav>
 

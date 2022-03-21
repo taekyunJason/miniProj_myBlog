@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/taekyunJason/nodeJs_prac01#readme",
   "dependencies": {
+    "async": "^3.2.3",
+    "crypto-js": "^4.1.1",
     "express": "^4.17.3",
     "mongoose": "^6.2.7"
   }

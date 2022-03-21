@@ -1,3 +1,5 @@
+//mongoose와 DB를 연결
+
 const mongoose = require("mongoose");
 
 const connect = () => {
