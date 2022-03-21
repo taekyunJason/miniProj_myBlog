@@ -35,10 +35,10 @@
       href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
       rel="stylesheet"
     />
-    <link
+    <!-- <link
       href="{{ url_for('static', filename='mystyle.css') }}"
       rel="stylesheet"
-    />
+    /> -->
 
     <link
       href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap"
@@ -84,25 +84,48 @@
     </style>
     <script>
       $(document).ready(function () {
-        callDetail();
+        callPostList();
       });
 
-      function callDetail() {
-        let postId = $.ajax({
+      function callPostList() {
+        
+        $.ajax({
           type: "GET",
-          url: "/api/list/detailData?postId=${postId}",
-          dataType: "json",
-          data: {},
+          url: "/api/list/detailData?",
+          contentType:"application/json",
+          data: JSON.stringify({
+      
+          }),
 
           success: function (response) {
             let rows = response;
             console.log(rows);
-            for (let i = 0; i < rows.length; i++) {}
+            for (let i = 0; i < rows.length; i++) {
+              let title = rows[i]['title']
+              let postId = rows[i]['postId']
+              let name = rows[i]['name']
+              let password = rows[i]['password']
+              let date = rows[i]['date']
+              let content = rows[i]['content']
+
+              let temp_html = `<div>
+                                <div class="num">${postId}</div>
+                                <div class="title">
+                                  <a href="view.html">${title}</a>
+                                </div>
+                                <div class="writer">${name}</div>
+                                <div class="date">${date}</div>
+                              </div>`
+              $('#postData').append(temp_html);
+            }
           },
         });
       }
 
-      function callPostID() {}
+      function moveToWritePost() {
+        document.location.href = "/api";
+
+      }
     </script>
   </head>
   <body>
@@ -113,14 +136,27 @@
       aria-label="main navigation"
     >
       <div class="navbar-brand" style="justify-content: center">
-        <a class="navbar-item" href="/">
+        <a class="navbar-item" href="/api/main">
           <p style="color: white; background-color: black" class="title">
             세상을 바꾸는 생각, 씽크탱크❗💬
           </p>
         </a>
-        <a href="writePost.html">포스트 하러가기</a>
+        <button onclick="moveToWritePost()" >포스트 하러가기</button>
       </div>
     </nav>
+    
+      <div class="board_list_wrap">
+        <div class="board_list">
+          <div class="top">
+            <div class="num">번호</div>
+            <div class="title">제목</div>
+            <div class="writer">글쓴이</div>
+            <div class="date">작성일</div>
+          </div>
+          <div class="postData" id="postData">
+
+          </div>
+      </div>
 
     <footer
       style="color: white; background-color: #110808"

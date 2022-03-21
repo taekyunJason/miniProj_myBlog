@@ -19,9 +19,9 @@ router.get("/main", async (req, res) => {
 });
 
 //포스트 상세 화면 데이터 내려주기
-router.post("detail/detailData", async (req, res) => {
-  const { num } = req.body;
-  const detailInfo = await Posts.find({ num });
+router.get("detail/detailData", async (req, res) => {
+  const { postId } = req.body;
+  const detailInfo = await Posts.find({ postId });
   res.json(detailInfo);
 });
 
