@@ -139,9 +139,10 @@
 
             $.ajax({
                 type: "GET",
-                url: `/thinkTank/detail?postId=${postId}`,
+                url: `/thinkTank/detail?postId=${postId}`,      //쿼리형식
+
                 contentType: "application/json",
-                data: {},
+                data: {},       //{} 안에 들어가는 데이터가 바디에 해당함
 
                 success: function (response) {
                     let rows = response
@@ -151,13 +152,15 @@
                         let date = rows[i]['date']
                         let content = rows[i]['content']
 
+                        console.log(title, name, date, content)
+
                         let temp_html = `<tr>
-                                <td class="tg-0pky" >${title}</td>
+                                <td class="tg-0pky">${title}</td>
                                 <td class="tg-0pky">${name}</td>
                                 <td class="tg-0pky">${date}</td>
-                                </a>
-                              </tr>`
-                        $("#postData").append(temp_html);
+                              </tr>
+                              <div>${content}</div>`;
+                        $("#postDetail").append(temp_html);
 
                     }
                 }
@@ -171,6 +174,16 @@
     </script>
 </head>
 
+<script>
+    function editPost() {
+
+    }
+
+    function deletePost() {
+
+    }
+</script>
+
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid" style="flex-direction: column;">
@@ -178,32 +191,21 @@
         </div>
     </nav>
 
-    <div class="board_write">
-        <div class="title">
-            <dl>
-                <dt>제목</dt>
-                <dd>
-                    <input id="input-title" type="text" placeholder="제목 입력" />
-                </dd>
-            </dl>
-        </div>
-        <div class="info">
-            <dl>
-                <dt>글쓴이</dt>
-                <dd>
-                    <input id="input-name" type="text" placeholder="글쓴이 입력" />
-                </dd>
-            </dl>
-            <dl>
-                <dt>비밀번호</dt>
-                <dd>
-                    <input id="input-password" type="password" placeholder="비밀번호 입력" />
-                </dd>
-            </dl>
-        </div>
-        <div class="cont">
-            <textarea id="input-content" placeholder="내용 입력"></textarea>
-        </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Title</th>
+                <th scope="col">Name</th>
+                <th scope="col">Date</th>
+            </tr>
+        </thead>
+        <tbody id="postDetail">
+        </tbody>
+    </table>
+
+    <div class="bt_wrap">
+        <button class="on" onclick="editPost()">편집하기</button>
+        <button onclick="deletePost()">삭제하기</button>
     </div>
 
     <footer class="footer mt-auto py-3 bg-light">
