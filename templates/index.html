@@ -87,7 +87,7 @@
         success: function (response) {
           let rows = response;
           console.log(rows);
-          for (let i = 0; i < rows.length; i++) {
+          for (let i = rows.length - 1; i >= 0; i--) {
             let title = rows[i]["title"];
             let postId = rows[i]["postId"];
             let name = rows[i]["name"];
@@ -119,30 +119,21 @@
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid" style="flex-direction: column;">
       <a class="navbar-brand" href="/thinkTank">세상을 바꾸는 생각, 씽크탱크❗💬</a>
-
-
       <a class="nav-link" href="/thinkTank/write">포스트 하러가기</a>
-
     </div>
   </nav>
-
 
   <table class="table">
     <thead>
       <tr>
-
         <th scope="col">Title</th>
         <th scope="col">Name</th>
         <th scope="col">Date</th>
       </tr>
     </thead>
     <tbody id="postDetail">
-
     </tbody>
   </table>
-
-
-  </div>
 
   <footer class="footer mt-auto py-3 bg-light">
     <div class="container" style="text-align: center;">

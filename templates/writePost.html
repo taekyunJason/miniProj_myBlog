@@ -1,91 +1,254 @@
 <!DOCTYPE html>
 <html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>공지사항</title>
-    <!-- <link rel="stylesheet" href="../css/css.css" /> -->
-    <!-- 제이쿼리 임포트 -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  </head>
 
-  <script>
-    function saveDB() {
-      let title = $("#input-title").val();
-      let name = $("#input-name").val();
-      let password = $("#input-password").val();
-      let content = $("#input-content").val();
+<head>
+  <meta charset="UTF-8">
+  <title>게시판 작성</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
 
-      console.log(title, name, password, content);
-      if ((title, name, password, content === null)) {
-        alert("이름을 입력해주세요!");
-      }
+  <!-- Required meta tags -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
-      $.ajax({
-        type: "POST",
-        url: "/thinkTank/detail/",
-        contentType: "application/json",
-        data: JSON.stringify({
-          title: title,
-          name: name,
-          password: password,
-          content: content,
-        }),
-        success: function (response) {
-          alert(response["msg"]);
-          document.location.href = "/thinkTank";
-        },
-      });
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" />
+
+  <!-- Bulma CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css" />
+  <!-- Font Awesome CSS -->
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+  <!-- <link
+      href="{{ url_for('static', filename='mystyle.css') }}"
+      rel="stylesheet"
+    /> -->
+
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet" />
+</head>
+
+<style>
+  * {
+    font-family: "Gowun Dodum", sans-serif;
+  }
+
+  .navbar-brand {
+    width: 100%;
+    height: 200px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .navbar-brand>button {
+    margin-top: 30px;
+    width: 200px;
+    height: 50px;
+
+    background-color: transparent;
+    color: white;
+
+    border-radius: 50px;
+    border: 1px solid white;
+
+    margin-top: 10px;
+  }
+
+  .navbar-brand>button:hover {
+    border: 3px solid white;
+  }
+
+  .footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 70px;
+    background: #ccc;
+  }
+
+  .tg {
+    border-collapse: collapse;
+    border-color: #9abad9;
+    border-spacing: 0;
+  }
+
+  .tg td {
+    background-color: #ebf5ff;
+    border-bottom-width: 1px;
+    border-color: #9abad9;
+    border-style: solid;
+    border-top-width: 1px;
+    border-width: 0px;
+    color: #444;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    overflow: hidden;
+    padding: 5px 20px;
+    word-break: normal;
+  }
+
+  .tg th {
+    background-color: #409cff;
+    border-bottom-width: 1px;
+    border-color: #9abad9;
+    border-style: solid;
+    border-top-width: 1px;
+    border-width: 0px;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    font-weight: normal;
+    overflow: hidden;
+    padding: 5px 20px;
+    word-break: normal;
+  }
+
+  .tg .tg-45fj {
+    border-color: inherit;
+    font-family: Tahoma, Geneva, sans-serif !important;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    vertical-align: top;
+  }
+
+  .tg .tg-564f {
+    border-color: inherit;
+    font-family: Tahoma, Geneva, sans-serif !important;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  .tg .tg-0pky {
+    border-color: inherit;
+    text-align: left;
+    vertical-align: top;
+  }
+</style>
+
+<script>
+  function saveDB() {
+    let title = $("#input-title").val();
+    let name = $("#input-name").val();
+    let password = $("#input-password").val();
+    let content = $("#input-content").val();
+
+    console.log(title, name, password, content);
+    if ((title, name, password, content === null)) {
+      alert("이름을 입력해주세요!");
     }
 
-    function moveToMain() {
-      document.location.href = "/thinkTank";
-    }
-  </script>
+    $.ajax({
+      type: "POST",
+      url: "/thinkTank/detail/",
+      contentType: "application/json",
+      data: JSON.stringify({
+        title: title,
+        name: name,
+        password: password,
+        content: content,
+      }),
+      success: function (response) {
+        alert(response["msg"]);
+        document.location.href = "/thinkTank";
+      },
+    });
+  }
 
-  <body>
-    <div class="board_wrap">
-      <div class="board_title">
-        <h1>공지사항</h1>
-        <p>공지사항을 빠르고 정확하게 안내해드립니다.</p>
+  function moveToMain() {
+    document.location.href = "/thinkTank";
+  }
+</script>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid" style="flex-direction: column;">
+      <a class="navbar-brand" href="/thinkTank">세상을 바꾸는 생각, 씽크탱크❗💬</a>
+    </div>
+  </nav>
+
+  <div class="board_write">
+    <div class="title">
+      <dl>
+        <dt>제목</dt>
+        <dd>
+          <input id="input-title" type="text" placeholder="제목 입력" />
+        </dd>
+      </dl>
+    </div>
+    <div class="info">
+      <dl>
+        <dt>글쓴이</dt>
+        <dd>
+          <input id="input-name" type="text" placeholder="글쓴이 입력" />
+        </dd>
+      </dl>
+      <dl>
+        <dt>비밀번호</dt>
+        <dd>
+          <input id="input-password" type="password" placeholder="비밀번호 입력" />
+        </dd>
+      </dl>
+    </div>
+    <div class="cont">
+      <textarea id="input-content" placeholder="내용 입력"></textarea>
+    </div>
+  </div>
+  <div class="bt_wrap">
+    <button class="on" onclick="saveDB()">등록</button>
+    <button onclick="moveToMain()">취소</button>
+  </div>
+
+  <footer class="footer mt-auto py-3 bg-light">
+    <div class="container" style="text-align: center;">
+      <span class="text-muted"><strong style="color: #d7a524">⛵ hanghae99 </strong> by
+        <strong class="has-text-link-dark">Jason_Kim </strong>|
+        <strong class="has-text-link-dark">Project : </strong> 세상을 바꾸는
+        생각, 씽크탱크 | <strong class="has-text-link-dark">Dev.</strong>
+        김태균</span>
+    </div>
+  </footer>
+</body>
+
+</html>
+
+<!-- <div class="board_write_wrap">
+    <div class="board_write">
+      <div class="title">
+        <dl>
+          <dt>제목</dt>
+          <dd>
+            <input id="input-title" type="text" placeholder="제목 입력" />
+          </dd>
+        </dl>
       </div>
-      <div class="board_write_wrap">
-        <div class="board_write">
-          <div class="title">
-            <dl>
-              <dt>제목</dt>
-              <dd>
-                <input id="input-title" type="text" placeholder="제목 입력" />
-              </dd>
-            </dl>
-          </div>
-          <div class="info">
-            <dl>
-              <dt>글쓴이</dt>
-              <dd>
-                <input id="input-name" type="text" placeholder="글쓴이 입력" />
-              </dd>
-            </dl>
-            <dl>
-              <dt>비밀번호</dt>
-              <dd>
-                <input
-                  id="input-password"
-                  type="password"
-                  placeholder="비밀번호 입력"
-                />
-              </dd>
-            </dl>
-          </div>
-          <div class="cont">
-            <textarea id="input-content" placeholder="내용 입력"></textarea>
-          </div>
-        </div>
-        <div class="bt_wrap">
-          <button class="on" onclick="saveDB()">등록</button>
-          <button onclick="moveToMain()">취소</button>
-        </div>
+      <div class="info">
+        <dl>
+          <dt>글쓴이</dt>
+          <dd>
+            <input id="input-name" type="text" placeholder="글쓴이 입력" />
+          </dd>
+        </dl>
+        <dl>
+          <dt>비밀번호</dt>
+          <dd>
+            <input
+              id="input-password"
+              type="password"
+              placeholder="비밀번호 입력"
+            />
+          </dd>
+        </dl>
+      </div>
+      <div class="cont">
+        <textarea id="input-content" placeholder="내용 입력"></textarea>
       </div>
     </div>
-  </body>
-</html>
+    
+  </div> -->

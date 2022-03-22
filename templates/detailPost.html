@@ -2,7 +2,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>게시판</title>
+    <title>게시판 상세 조회</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
@@ -172,40 +172,47 @@
 </head>
 
 <body>
-    <nav style="color: black; background-color: black" class="navbar is-fixed-top is-white" role="navigation"
-        aria-label="main navigation">
-        <div class="navbar-brand" style="justify-content: center">
-            <a class="navbar-item" href="/thinkTank/detailPost">
-                <p style="color: white; background-color: black" class="title">
-                    세상을 바꾸는 생각, 씽크탱크❗💬
-                </p>
-            </a>
-            <button onclick="moveToEditPost()">포스트 하러가기</button>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid" style="flex-direction: column;">
+            <a class="navbar-brand" href="/thinkTank">세상을 바꾸는 생각, 씽크탱크❗💬</a>
         </div>
     </nav>
 
-    <table class="tg">
-        <thead>
-            <p>
-                <tr>
-                    <th class="tg-564f">제목</th>
-                    <th class="tg-45fj">글쓴이</th>
-                    <th class="tg-45fj">날짜</th>
-                </tr>
-            </p>
-        </thead>
-        <tbody id="postData"></tbody>
-    </table>
+    <div class="board_write">
+        <div class="title">
+            <dl>
+                <dt>제목</dt>
+                <dd>
+                    <input id="input-title" type="text" placeholder="제목 입력" />
+                </dd>
+            </dl>
+        </div>
+        <div class="info">
+            <dl>
+                <dt>글쓴이</dt>
+                <dd>
+                    <input id="input-name" type="text" placeholder="글쓴이 입력" />
+                </dd>
+            </dl>
+            <dl>
+                <dt>비밀번호</dt>
+                <dd>
+                    <input id="input-password" type="password" placeholder="비밀번호 입력" />
+                </dd>
+            </dl>
+        </div>
+        <div class="cont">
+            <textarea id="input-content" placeholder="내용 입력"></textarea>
+        </div>
+    </div>
 
-    <footer style="color: white; background-color: #110808" class="footer mt-3 is-fixed-bottom">
-        <div class="content has-text-centered">
-            <p>
-                <strong style="color: #d7a524">⛵hanghae99</strong> by
+    <footer class="footer mt-auto py-3 bg-light">
+        <div class="container" style="text-align: center;">
+            <span class="text-muted"><strong style="color: #d7a524">⛵ hanghae99 </strong> by
                 <strong class="has-text-link-dark">Jason_Kim </strong>|
                 <strong class="has-text-link-dark">Project : </strong> 세상을 바꾸는
                 생각, 씽크탱크 | <strong class="has-text-link-dark">Dev.</strong>
-                김태균
-            </p>
+                김태균</span>
         </div>
     </footer>
 </body>
