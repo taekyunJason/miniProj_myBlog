@@ -3,7 +3,6 @@
 const express = require("express");
 const Posts = require("../schemas/defineData");
 const cryptoJS = require("crypto-js");
-const { schema } = require("../schemas/defineData");
 const router = express.Router();
 
 //포스트 작성 화면 이동
@@ -54,11 +53,31 @@ router.get("/", async (req, res) => {
   res.sendFile(path.join(__dirname + "/../templates/index.html"));
 });
 
-//포스트 목록 화면에 포스트 데이터 내려주기
-router.get("detail/detailData", async (req, res) => {
-  const { postId } = req.query;
-  const detailInfo = await Posts.find({ postId });
+router.get("/main", async (req, res) => {
+  const detailInfo = await Posts.find({});
   res.json(detailInfo);
+});
+
+//포스트 목록 화면에 포스트 데이터 내려주기
+//요청 경로 앞에 '/'빠지면 라우터 경로를 찾아가지 못함...!
+router.get("/detail", async (req, res) => {
+  const PostId = req.query.postId;
+  console.log(PostId);
+  const detailInfo = await Posts.find({ postId: Number(PostId) });
+  res.json(detailInfo);
+});
+
+// //포스트 상세 화면에 필요한 데이터이동
+// router.get("/detailPost", async (req, res) => {
+
+//   const path = require("path");
+//   res.json();
+// });
+
+//포스트 상세 화면 껍데기 내려주기
+router.get("/detailPost/show", async (req, res) => {
+  const path = require("path");
+  res.sendFile(path.join(__dirname + "/../templates/detailPost.html"));
 });
 
 module.exports = router;
