@@ -17,10 +17,13 @@
       let content = $("#input-content").val();
 
       console.log(title, name, password, content);
+      if ((title, name, password, content === null)) {
+        alert("이름을 입력해주세요!");
+      }
 
       $.ajax({
         type: "POST",
-        url: "/api/detail/",
+        url: "/thinkTank/detail/",
         contentType: "application/json",
         data: JSON.stringify({
           title: title,
@@ -30,9 +33,13 @@
         }),
         success: function (response) {
           alert(response["msg"]);
-          document.location.href = "/api/main";
+          document.location.href = "/thinkTank";
         },
       });
+    }
+
+    function moveToMain() {
+      document.location.href = "/thinkTank";
     }
   </script>
 
@@ -76,7 +83,7 @@
         </div>
         <div class="bt_wrap">
           <button class="on" onclick="saveDB()">등록</button>
-          <a href="postList">취소</a>
+          <button onclick="moveToMain()">취소</button>
         </div>
       </div>
     </div>

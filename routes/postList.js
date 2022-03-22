@@ -1,30 +1,18 @@
 //포스트 목록 코드를 작성할 파일
 
 const express = require("express");
-const Posts = require("../schemas/posts");
+const Posts = require("../schemas/defineData");
 const cryptoJS = require("crypto-js");
-const { schema } = require("../schemas/posts");
+const { schema } = require("../schemas/defineData");
 const router = express.Router();
 
-//포스트 목록 화면 내려주기
-router.get("/", async (req, res) => {
+//포스트 작성 화면 이동
+router.get("/write", async (req, res) => {
   const path = require("path");
   res.sendFile(path.join(__dirname + "/../templates/writePost.html"));
 });
 
-//포스트 목록 화면 내려주기
-router.get("/main", async (req, res) => {
-  const path = require("path");
-  res.sendFile(path.join(__dirname + "/../templates/index.html"));
-});
-
-//포스트 상세 화면 데이터 내려주기
-router.get("detail/detailData", async (req, res) => {
-  const { postId } = req.body;
-  const detailInfo = await Posts.find({ postId });
-  res.json(detailInfo);
-});
-
+//포스트 작성 데이터 DB 저장
 router.post("/detail", async (req, res) => {
   const today = new Date();
   const date = today.toLocaleString();
@@ -57,16 +45,20 @@ router.post("/detail", async (req, res) => {
     date,
   });
 
-  //   const createdPosts = await Posts.create({
-  //     title,
-  //     postId: postIdCnt,
-  //     name,
-  //     password,
-  //     date,
-  //     content,
-  //   });
-
   res.json({ msg: "저장되었습니다!" });
+});
+
+//포스트 목록 화면 이동
+router.get("/", async (req, res) => {
+  const path = require("path");
+  res.sendFile(path.join(__dirname + "/../templates/index.html"));
+});
+
+//포스트 목록 화면에 포스트 데이터 내려주기
+router.get("detail/detailData", async (req, res) => {
+  const { postId } = req.query;
+  const detailInfo = await Posts.find({ postId });
+  res.json(detailInfo);
 });
 
 module.exports = router;

@@ -91,11 +91,9 @@
         
         $.ajax({
           type: "GET",
-          url: "/api/list/detailData?",
+          url: "/thinkTank/detail/detailData?postId=1",
           contentType:"application/json",
-          data: JSON.stringify({
-      
-          }),
+          data: {},
 
           success: function (response) {
             let rows = response;
@@ -123,7 +121,7 @@
       }
 
       function moveToWritePost() {
-        document.location.href = "/api";
+        document.location.href = "/thinkTank/write";
 
       }
     </script>
@@ -136,7 +134,7 @@
       aria-label="main navigation"
     >
       <div class="navbar-brand" style="justify-content: center">
-        <a class="navbar-item" href="/api/main">
+        <a class="navbar-item" href="/thinkTank">
           <p style="color: white; background-color: black" class="title">
             세상을 바꾸는 생각, 씽크탱크❗💬
           </p>

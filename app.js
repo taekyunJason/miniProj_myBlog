@@ -26,12 +26,12 @@ app.use(requestMiddleware);
 //api 경로로 들어왔을때만 goodsRouter라는 미들웨어를 실행시키겠다는 코드
 //app.use("/api", [goodsRouter, userRouter]); -> 두개의 라우터를 실행한다.
 //express 에서는 routing을 미들웨어로 처리함 -> 이렇게 하기 위해 Router라는 객체를 사용함
-app.use("/api", [postsRouter]);
+app.use("/thinkTank", [postsRouter]);
 
 //app.get으로 res를 실행할때 제대로 구현이 됨.
 //routing은 클라이언트의 요청 조건(메서드, 주소 등)에 대응해서 응답하는 방식
 app.get("/", (req, res) => {
-  res.send("this is start page");
+  res.send("Please type '/thinkTank' behind your URL!");
 });
 
 //처음에 미들웨어를 구현해야
