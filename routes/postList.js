@@ -67,6 +67,27 @@ router.get("/detail", async (req, res) => {
   res.json(detailInfo);
 });
 
+//특정 게시물에 대한 데이터 삭제
+router.delete("/detail", async (req, res) => {
+  const PostId = req.query.postId;
+  console.log(PostId);
+  const { password } = req.body;
+
+  const detailInfo = await Posts.deleteOne({ postId: Number(PostId) });
+  res.json({ msg: "삭제되었습니다." });
+});
+
+//특정 게시물에 대한 데이터 수정
+router.put("/detail", async (req, res) => {
+  const { name, postId, content, title } = req.body;
+  const post_list = await Posts.updateOne(
+    { postId: Number(postId) },
+    { $set: { name, content, title } }
+  );
+
+  res.json(post_list);
+});
+
 // //포스트 상세 화면에 필요한 데이터이동
 // router.get("/detailPost", async (req, res) => {
 

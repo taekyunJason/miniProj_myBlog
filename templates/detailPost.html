@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html lang="ko">
 
 <head>
     <meta charset="UTF-8">
@@ -129,6 +130,7 @@
             vertical-align: top;
         }
     </style>
+
     <script>
         $(document).ready(function () {
             callPostData();
@@ -151,15 +153,17 @@
                         let name = rows[i]['name']
                         let date = rows[i]['date']
                         let content = rows[i]['content']
+                        let password = rows[i]['password']
 
                         console.log(title, name, date, content)
 
-                        let temp_html = `<tr>
-                                <td class="tg-0pky">${title}</td>
-                                <td class="tg-0pky">${name}</td>
-                                <td class="tg-0pky">${date}</td>
-                              </tr>
-                              <div>${content}</div>`;
+                        let temp_html = `
+                                <input class="input-name" id="title" type="text" placeholder="${title}">
+                                <input class="tg-0pky" id="name" type="text" placeholder="${name}">
+                                <input class="tg-0pky" id="date" type="text" placeholder="${date}">
+                                <input class="tg-0pky" id="content" type="text" placeholder="${content}"> 
+                                <button class="on" onclick="editPost('${title}','${name}','${postId}','${content}','${password}')">편집하기</button>
+                                <button class="on" onclick="deletePost()">삭제하기</button>`;
                         $("#postDetail").append(temp_html);
 
                     }
@@ -171,18 +175,88 @@
             document.location.href = "/thinkTank/write";
         }
 
+        function editPost(dbTitle, dbName, postId, dbContent, dbPassword) {
+            console.log(dbTitle, dbName, dbContent);
+
+            let title = $('#title').val()
+            if (!title) {
+                title = dbTitle
+            }
+            let name = $('#name').val()
+            if (!name) {
+                name = dbName
+            }
+            let content = $('#content').val()
+            if (!content) {
+                content = dbContent
+            }
+            let password = $('#input-password').val()
+
+            console.log(dbPassword, password)
+            console.log(typeof (dbPassword), typeof (password))
+
+            if ((password) === dbPassword) {
+                console.log(title)
+                $.ajax({
+                    type: "PUT",
+                    url: "/thinkTank/detail",
+                    contentType: "application/json",
+                    data: JSON.stringify({
+                        title: title,
+                        name: name,
+                        content: content,
+                        postId: postId
+                    }),
+                    success: function (response) {
+                        alert("수정되었습니다!")
+                        document.location.href = "/thinkTank";
+                    }
+                })
+            }
+
+
+            // let postId = new URLSearchParams(location.search).get('postId')
+            // let password = $("#input-password").val();
+
+            // $.ajax({
+            //     type: "PUT",
+            //     url: `/thinkTank/detail?postId=${postId}`,      //쿼리형식
+
+            //     contentType: "application/json",
+            //     data: {},       //{} 안에 들어가는 데이터가 바디에 해당함
+
+            //     success: function (response) {
+
+            //     }
+            // })
+        }
+
+
+        function deletePost() {
+            let postId = new URLSearchParams(location.search).get('postId')
+            let password = $("#input-password").val();
+
+            $.ajax({
+                type: "DELETE",
+                url: `/thinkTank/detail?postId=${postId}`,      //쿼리형식
+
+                contentType: "application/json",
+                data: {},       //{} 안에 들어가는 데이터가 바디에 해당함
+
+                success: function (response) {
+                    if (response["msg"]) {
+                        document.location.href = "/thinkTank";
+                    } else {
+
+                    }
+
+                }
+            })
+        }
     </script>
 </head>
 
-<script>
-    function editPost() {
 
-    }
-
-    function deletePost() {
-
-    }
-</script>
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -201,11 +275,12 @@
         </thead>
         <tbody id="postDetail">
         </tbody>
+        <input id="input-password" type="password" placeholder="비밀번호 입력" />
+
     </table>
 
     <div class="bt_wrap">
-        <button class="on" onclick="editPost()">편집하기</button>
-        <button onclick="deletePost()">삭제하기</button>
+
     </div>
 
     <footer class="footer mt-auto py-3 bg-light">
